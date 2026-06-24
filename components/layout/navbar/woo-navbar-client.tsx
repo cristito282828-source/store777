@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { CategoryDropdown } from './category-dropdown';
 import { CartIcon } from '@/components/cart/CartIcon';
 
@@ -213,7 +214,17 @@ function WooMobileMenu({
       {/* Menu Panel */}
       <div className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full animate-in slide-in-from-left max-w-sm flex-col bg-white shadow-xl">
         <div className="flex items-center justify-between border-b p-4">
-          <span className="text-lg font-semibold">{SITE_NAME}</span>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo-777.jpeg"
+              alt="Store 777"
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
+              priority
+            />
+            <span className="text-lg font-semibold">{SITE_NAME}</span>
+          </div>
           <button
             onClick={onClose}
             className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors"
@@ -297,10 +308,15 @@ export function WooNavbarClient({ categories, SITE_NAME }: WooNavbarClientProps)
               prefetch={true}
               className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
             >
-              <div className="flex h-16 w-16 flex-none items-center justify-center rounded-lg border border-gray-700 bg-gray-800">
-                <span className="text-sm font-semibold uppercase tracking-[0.15em] text-white">
-                  STORE
-                </span>
+              <div className="flex h-12 w-12 md:h-16 md:w-16 flex-none items-center justify-center">
+                <Image
+                  src="/logo-777.jpeg"
+                  alt="Store 777"
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-contain"
+                  priority
+                />
               </div>
             </Link>
 

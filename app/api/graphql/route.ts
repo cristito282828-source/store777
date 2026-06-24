@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL
-  ? `${process.env.NEXT_PUBLIC_WOOCOMMERCE_URL}/graphql`
+  ? `${process.env.NEXT_PUBLIC_WOOCOMMERCE_URL}/graphql777`
   : '';
 
 export async function POST(request: NextRequest) {

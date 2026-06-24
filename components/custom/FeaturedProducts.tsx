@@ -16,8 +16,14 @@ interface FeaturedProduct {
   description: string;
 }
 
+interface FeaturedCategory {
+  name: string;
+  slug: string;
+}
+
 interface FeaturedProductsProps {
   products: FeaturedProduct[];
+  categories?: FeaturedCategory[];
   title?: string;
 }
 
@@ -36,7 +42,7 @@ function formatPrice(price: string | undefined): string {
   return clean.trim();
 }
 
-export default function FeaturedProducts({ products }: FeaturedProductsProps) {
+export default function FeaturedProducts({ products, categories = [] }: FeaturedProductsProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
@@ -165,7 +171,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   }
 
   return (
-    <div className="bg-[#364e41] py-12 sm:py-16 lg:py-20 overflow-hidden">
+    <div className="bg-gradient-to-br from-[#0A0A0A] via-[#101828] to-[#0A0A0A] py-12 sm:py-16 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-6 items-center">
 
@@ -176,10 +182,10 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
               {/* Botón izquierdo */}
               <button
                 onClick={scrollPrev}
-                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 mr-3 z-10"
+                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-[#00E5D1] rounded-full shadow-md shadow-[#00E5D1]/40 transition-all duration-300 hover:scale-110 hover:bg-white mr-3 z-10"
                 aria-label="Anterior"
               >
-                <ChevronLeft className="h-5 w-5 text-gray-700" />
+                <ChevronLeft className="h-5 w-5 text-black" />
               </button>
 
               {/* Scroll Container */}
@@ -194,7 +200,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
                     className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
                   >
                     <a
-                      href={`/products/${product.slug}`}
+                      href={`/product/${product.slug}`}
                       className="group block"
                     >
                       {/* Card con fondo blanco - formato vertical tipo Instagram */}
@@ -224,10 +230,10 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
               {/* Botón derecho */}
               <button
                 onClick={scrollNext}
-                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 ml-3 z-10"
+                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-[#00E5D1] rounded-full shadow-md shadow-[#00E5D1]/40 transition-all duration-300 hover:scale-110 hover:bg-white ml-3 z-10"
                 aria-label="Siguiente"
               >
-                <ChevronRight className="h-5 w-5 text-gray-700" />
+                <ChevronRight className="h-5 w-5 text-black" />
               </button>
 
             </div>
@@ -257,17 +263,37 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
             </div>
           </div>
 
-          {/* Caption - Derecha */}
+          {/* Categorías - Derecha */}
           <div className="lg:col-span-3 order-1 lg:order-2 flex flex-col justify-center items-center lg:items-start h-full">
-            <p className="font-moderat text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
-              Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
+            <h2 className="font-moderat text-2xl md:text-3xl font-extrabold tracking-tight text-[#FAFAFA] uppercase mb-4 text-center lg:text-left">
+              Categorías
+            </h2>
+            <p className="font-moderat text-sm leading-relaxed text-[#FAFAFA]/70 text-center lg:text-left mb-6">
+              Explorá nuestro catálogo por marca.
             </p>
-            <Link
-              href="/search"
-              className="inline-flex items-center justify-center font-moderat bg-[#2d7a3e] text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 hover:bg-[#1e5a2a] transition-all duration-300"
-            >
-              Ver Todos
-            </Link>
+            <div className="flex flex-col gap-2 w-full">
+              {categories.length > 0 ? (
+                categories.slice(0, 6).map((cat) => (
+                  <Link
+                    key={cat.slug}
+                    href={`/tienda/categoria/${cat.slug}`}
+                    className="group flex items-center justify-between w-full px-4 py-3 bg-[#101828] border border-[#00E5D1]/30 hover:border-[#00E5D1] hover:bg-[#00E5D1]/10 transition-all duration-300"
+                  >
+                    <span className="font-moderat text-sm font-bold uppercase tracking-[0.1em] text-[#FAFAFA] group-hover:text-[#00E5D1] transition-colors">
+                      {cat.name}
+                    </span>
+                    <span className="text-[#00E5D1] text-xl group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                ))
+              ) : (
+                <Link
+                  href="/tienda/categoria"
+                  className="inline-flex items-center justify-center font-moderat bg-[#D32F2F] text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 hover:bg-[#8B0000] transition-all duration-300"
+                >
+                  Ver Todas las Categorías
+                </Link>
+              )}
+            </div>
           </div>
 
         </div>

@@ -42,7 +42,7 @@ const domain = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL
   : '';
 
 // Endpoint directo (para referencia)
-const directEndpoint = `${domain}/graphql`;
+const directEndpoint = `${domain}/graphql777`;
 
 /**
  * Cliente fetch para WooCommerce GraphQL

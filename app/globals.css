@@ -11,6 +11,14 @@
   --brand-neutral: #F3F4F6; /* Gris claro para fondos (Tailwind gray-100) */
   --brand-text: #6B7280; /* Gris neutro para texto (Tailwind gray-500) */
 
+  /* === Paleta extraída del logo-777.jpeg === */
+  --logo-cyan: #00E5D1; /* Turquesa eléctrico (texto y bordes del logo) */
+  --logo-cyan-dark: #009688; /* Turquesa oscuro para variantes */
+  --logo-red: #D32F2F; /* Rojo sangre (suela y manchas) */
+  --logo-red-dark: #8B0000; /* Rojo oscuro */
+  --logo-black: #0A0A0A; /* Negro profundo */
+  --logo-bone: #FAFAFA; /* Blanco hueso */
+
   /* Variables para temas claro/oscuro */
   --background: var(--brand-secondary);
   --foreground: var(--brand-primary);
