@@ -47,7 +47,17 @@ export default function CheckoutPage() {
 
     setIsSubmitting(true);
 
-    const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER || '56900000000';
+    const rawPhoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER || '3232182386';
+    const digitsOnly = rawPhoneNumber.replace(/[^\d]/g, '');
+
+    let normalizedPhoneNumber = digitsOnly;
+    if (normalizedPhoneNumber.startsWith('0')) {
+      normalizedPhoneNumber = `57${normalizedPhoneNumber.slice(1)}`;
+    } else if (!normalizedPhoneNumber.startsWith('57')) {
+      normalizedPhoneNumber = `57${normalizedPhoneNumber}`;
+    }
+
+    normalizedPhoneNumber = `+${normalizedPhoneNumber}`;
 
     // Construir mensaje simplificado para evitar problemas con WhatsApp
     let message = '*NUEVO PEDIDO - Ejemplo de Tienda*%0A%0A';
@@ -74,7 +84,7 @@ export default function CheckoutPage() {
     message += 'Por favor confirmar mi pedido. Gracias!';
 
     // Abrir WhatsApp directamente sin encoding adicional
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    const whatsappUrl = `https://wa.me/${normalizedPhoneNumber}?text=${message}`;
 
     window.open(whatsappUrl, '_blank');
 

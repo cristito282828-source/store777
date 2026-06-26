@@ -25,6 +25,9 @@ export interface WooProduct {
   galleryImages?: {
     nodes: WooMediaItem[];
   };
+  productCategories?: {
+    nodes: WooCollection[];
+  };
   variations?: {
     nodes: WooProductVariation[];
   };

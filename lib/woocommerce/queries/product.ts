@@ -93,6 +93,12 @@ query getProducts($search: String) {
       slug
       name
       description
+      productCategories {
+        nodes {
+          slug
+          name
+        }
+      }
       ... on SimpleProduct {
         price
         regularPrice

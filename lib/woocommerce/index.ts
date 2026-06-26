@@ -225,7 +225,7 @@ const reshapeProduct = (product: WooProduct): Product => {
     },
     tags: [],
     updatedAt: product.modified || new Date().toISOString(),
-    collections: []
+    collections: product.productCategories?.nodes || []
   };
 };
 

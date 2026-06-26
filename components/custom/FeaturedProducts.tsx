@@ -46,6 +46,48 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [displayProducts, setDisplayProducts] = useState<FeaturedProduct[]>(products);
+  const [loadingCategory, setLoadingCategory] = useState(false);
+
+  const fetchCategoryProducts = async (categorySlug: string) => {
+    setLoadingCategory(true);
+    try {
+      const res = await fetch(`/api/products-by-category?category=${encodeURIComponent(categorySlug)}`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch products for category ${categorySlug}`);
+      }
+      const data = await res.json();
+      const items: FeaturedProduct[] = data.products || [];
+      setDisplayProducts(items);
+      setActiveIndex(0);
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = 0;
+      }
+    } catch (error) {
+      console.error('Error loading category products:', error);
+      setDisplayProducts([]);
+    } finally {
+      setLoadingCategory(false);
+    }
+  };
+
+  useEffect(() => {
+    setDisplayProducts(products);
+    setSelectedCategory(null);
+    setActiveIndex(0);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = 0;
+    }
+  }, [products]);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchCategoryProducts(selectedCategory);
+    }
+  }, [selectedCategory]);
+
+  const filteredProducts = displayProducts;
 
   // Calcular cuántas cards se ven a la vez según el viewport
   const getVisibleCards = () => {
@@ -92,10 +134,10 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
       }
     });
 
-    const normalizedIndex = closestIndex % products.length;
+    const normalizedIndex = closestIndex % filteredProducts.length;
     setActiveIndex(normalizedIndex);
 
-    if (closestIndex >= products.length && !container.dataset.isLooping) {
+    if (closestIndex >= filteredProducts.length && !container.dataset.isLooping) {
       container.dataset.isLooping = 'true';
       setTimeout(() => {
         const targetCard = cards[normalizedIndex];
@@ -108,7 +150,7 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
         delete container.dataset.isLooping;
       }, 100);
     }
-  }, [products.length]);
+  }, [filteredProducts.length]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -138,28 +180,35 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
     }
   };
 
+  useEffect(() => {
+    setActiveIndex(0);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = 0;
+    }
+  }, [selectedCategory]);
+
   // Calcular páginas
-  const totalPages = Math.ceil(products.length / visibleCards);
+  const totalPages = Math.ceil(filteredProducts.length / visibleCards);
   const activePage = Math.floor(activeIndex / visibleCards);
 
   // Navegar a una página específica
   const scrollToPage = (pageIndex: number) => {
     const cardIndex = pageIndex * visibleCards;
-    scrollToCard(Math.min(cardIndex, products.length - 1));
+    scrollToCard(Math.min(cardIndex, filteredProducts.length - 1));
   };
 
   // Navegación infinita
   const scrollPrev = () => {
     let newIndex = activeIndex - 1;
     if (newIndex < 0) {
-      newIndex = products.length - 1;
+      newIndex = filteredProducts.length - 1;
     }
     scrollToCard(newIndex);
   };
 
   const scrollNext = () => {
     let newIndex = activeIndex + 1;
-    if (newIndex >= products.length) {
+    if (newIndex >= filteredProducts.length) {
       newIndex = 0;
     }
     scrollToCard(newIndex);
@@ -168,6 +217,17 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
   // Early return después de todos los hooks
   if (!products || products.length === 0) {
     return null;
+  }
+
+  if (selectedCategory && !loadingCategory && filteredProducts.length === 0) {
+    return (
+      <div className="bg-gradient-to-br from-[#0A0A0A] via-[#101828] to-[#0A0A0A] py-12 sm:py-16 lg:py-20 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-white text-center py-12">
+          <p className="text-xl font-semibold">No hay productos para esta marca.</p>
+          <p className="mt-3 text-sm text-white/70">Selecciona otra marca para ver productos disponibles.</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -194,7 +254,7 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
                 className="scroll-container flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar flex-1"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {[...products, ...products].map((product, index) => (
+                {[...filteredProducts, ...filteredProducts].map((product, index) => (
                   <div
                     key={`${product.slug}-${index}`}
                     className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
@@ -273,18 +333,22 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
             </p>
             <div className="flex flex-col gap-2 w-full">
               {categories.length > 0 ? (
-                categories.slice(0, 6).map((cat) => (
-                  <Link
-                    key={cat.slug}
-                    href={`/tienda/categoria/${cat.slug}`}
-                    className="group flex items-center justify-between w-full px-4 py-3 bg-[#101828] border border-[#00E5D1]/30 hover:border-[#00E5D1] hover:bg-[#00E5D1]/10 transition-all duration-300"
-                  >
-                    <span className="font-moderat text-sm font-bold uppercase tracking-[0.1em] text-[#FAFAFA] group-hover:text-[#00E5D1] transition-colors">
-                      {cat.name}
-                    </span>
-                    <span className="text-[#00E5D1] text-xl group-hover:translate-x-1 transition-transform">→</span>
-                  </Link>
-                ))
+                categories.slice(0, 6).map((cat) => {
+                  const isActive = selectedCategory === cat.slug;
+                  return (
+                    <button
+                      key={cat.slug}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat.slug)}
+                      className={`group flex items-center justify-between w-full px-4 py-3 rounded-sm border transition-all duration-300 ${isActive ? 'bg-[#00E5D1] border-[#00E5D1] text-black' : 'bg-[#101828] border-[#00E5D1]/30 text-[#FAFAFA] hover:border-[#00E5D1] hover:bg-[#00E5D1]/10'}`}
+                    >
+                      <span className="font-moderat text-sm font-bold uppercase tracking-[0.1em] transition-colors">
+                        {cat.name}
+                      </span>
+                      <span className="text-[#00E5D1] text-xl transition-transform group-hover:translate-x-1">→</span>
+                    </button>
+                  );
+                })
               ) : (
                 <Link
                   href="/tienda/categoria"

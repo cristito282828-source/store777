@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,30 +8,18 @@ import 'slick-carousel/slick/slick-theme.css';
 const slides = [
   {
     id: '1',
-    bg: 'bg-gradient-to-br from-[#0A0A0A] to-[#1e5a2a]',
-    accent: 'text-[#00E5D1]',
-    title: 'Lorem ipsum dolor sit amet',
-    description: 'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    buttonText: 'Ver colección',
-    href: '/search',
+    src: '/banner-forza-cali (1).png',
+    alt: 'Banner Forza Cali',
   },
   {
     id: '2',
-    bg: 'bg-gradient-to-br from-[#0A0A0A] via-[#101828] to-[#0A0A0A]',
-    accent: 'text-[#D32F2F]',
-    title: 'Nulla facilisi etiam dignissim',
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    buttonText: 'Explorar ahora',
-    href: '/search',
+    src: '/banner-forza.png',
+    alt: 'Banner Forza',
   },
   {
     id: '3',
-    bg: 'bg-gradient-to-br from-[#0A0A0A] to-[#009688]',
-    accent: 'text-[#00E5D1]',
-    title: 'Suspendisse potenti in faucibus',
-    description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-    buttonText: 'Ver más',
-    href: '/search',
+    src: '/banner-forza3.png',
+    alt: 'Banner Forza 3',
   },
 ];
 
@@ -53,29 +42,15 @@ export default function SeasonalBanner() {
     <section id="seasonal" className="relative text-white">
       <Slider {...settings}>
         {slides.map((slide) => (
-          <div
-            key={slide.id}
-            className={`relative h-[70vh] min-h-[520px] overflow-hidden ${slide.bg}`}
-          >
-            <div className="relative z-10 flex h-full items-center justify-center px-6 text-center">
-              <div className="max-w-3xl">
-                <p className={`text-sm uppercase tracking-[0.35em] ${slide.accent} mb-4`}>
-                  Lo último en tendencias
-                </p>
-                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">
-                  {slide.title}
-                </h2>
-                <p className="mx-auto max-w-2xl text-lg leading-8 text-white/85 mb-8">
-                  {slide.description}
-                </p>
-                <a
-                  href={slide.href}
-                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-black transition-colors duration-300 hover:bg-gray-100"
-                >
-                  {slide.buttonText}
-                </a>
-              </div>
-            </div>
+          <div key={slide.id} className="relative h-[70vh] min-h-[520px] overflow-hidden">
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority={slide.id === '1'}
+            />
           </div>
         ))}
       </Slider>
