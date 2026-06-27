@@ -106,7 +106,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     description: shortDescription || description,
     image: image,
     price: price.replace(/[^0-9]/g, ''), // Remover símbolos para schema
-    priceCurrency: 'CLP',
+    priceCurrency: 'COP',
     availability: product.stockStatus === 'IN_STOCK'
       ? 'https://schema.org/InStock'
       : product.stockStatus === 'OUT_OF_STOCK'

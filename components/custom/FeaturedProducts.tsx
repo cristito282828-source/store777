@@ -214,21 +214,9 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
     scrollToCard(newIndex);
   };
 
-  // Early return después de todos los hooks
-  if (!products || products.length === 0) {
-    return null;
-  }
-
-  if (selectedCategory && !loadingCategory && filteredProducts.length === 0) {
-    return (
-      <div className="bg-gradient-to-br from-[#0A0A0A] via-[#101828] to-[#0A0A0A] py-12 sm:py-16 lg:py-20 overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-white text-center py-12">
-          <p className="text-xl font-semibold">No hay productos para esta marca.</p>
-          <p className="mt-3 text-sm text-white/70">Selecciona otra marca para ver productos disponibles.</p>
-        </div>
-      </div>
-    );
-  }
+  // (El render SIEMPRE muestra el banner con el panel de categorías.
+  //  El área de productos es condicional: si no hay productos o si la categoría
+  //  filtrada no tiene productos, muestra un placeholder sin ocultar el panel.)
 
   return (
     <div className="bg-gradient-to-br from-[#0A0A0A] via-[#101828] to-[#0A0A0A] py-12 sm:py-16 lg:py-20 overflow-hidden">
@@ -237,90 +225,109 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
 
           {/* Slider con flechas - Izquierda */}
           <div className="lg:col-span-9 order-2 lg:order-1">
-            <div className="relative flex items-center">
-
-              {/* Botón izquierdo */}
-              <button
-                onClick={scrollPrev}
-                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-[#00E5D1] rounded-full shadow-md shadow-[#00E5D1]/40 transition-all duration-300 hover:scale-110 hover:bg-white mr-3 z-10"
-                aria-label="Anterior"
-              >
-                <ChevronLeft className="h-5 w-5 text-black" />
-              </button>
-
-              {/* Scroll Container */}
-              <div
-                ref={scrollContainerRef}
-                className="scroll-container flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar flex-1"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              >
-                {[...filteredProducts, ...filteredProducts].map((product, index) => (
-                  <div
-                    key={`${product.slug}-${index}`}
-                    className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
-                  >
-                    <a
-                      href={`/product/${product.slug}`}
-                      className="group block"
-                    >
-                      {/* Card con fondo blanco - formato vertical tipo Instagram */}
-                      <div className="relative aspect-[3/4] w-full overflow-hidden bg-white rounded-sm">
-                        <Image
-                          src={product.imageSrc}
-                          alt={`${product.name} - ${product.category}`}
-                          fill
-                          className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                      </div>
-                      {/* Nombre y precio debajo */}
-                      <div className="mt-3 text-white">
-                        <h3 className="font-moderat text-sm sm:text-base font-normal">
-                          {product.name}
-                        </h3>
-                        <p className="font-moderat text-sm sm:text-base mt-1">
-                          {product.price}
-                        </p>
-                      </div>
-                    </a>
-                  </div>
-                ))}
+            {(!products || products.length === 0) ? (
+              // Sin productos destacados al cargar
+              <div className="flex items-center justify-center min-h-[420px] bg-[#101828] border border-[#FAFAFA]/10 rounded-sm p-8 text-center">
+                <div>
+                  <p className="text-[#FAFAFA]/80 text-lg font-bold mb-2">
+                    No hay productos destacados.
+                  </p>
+                  <p className="text-[#FAFAFA]/50 text-sm">
+                    Seleccioná una marca para ver su catálogo.
+                  </p>
+                </div>
               </div>
-
-              {/* Botón derecho */}
-              <button
-                onClick={scrollNext}
-                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-[#00E5D1] rounded-full shadow-md shadow-[#00E5D1]/40 transition-all duration-300 hover:scale-110 hover:bg-white ml-3 z-10"
-                aria-label="Siguiente"
-              >
-                <ChevronRight className="h-5 w-5 text-black" />
-              </button>
-
-            </div>
-
-            {/* Dots de navegación */}
-            <div className="flex justify-center items-center gap-1 mt-6">
-              {Array.from({ length: totalPages }).map((_, pageIndex) => {
-                const isActive = activePage === pageIndex;
-                return (
+            ) : (selectedCategory && !loadingCategory && filteredProducts.length === 0) ? (
+              // Filtro activo sin productos
+              <div className="flex items-center justify-center min-h-[420px] bg-[#101828] border border-[#FAFAFA]/10 rounded-sm p-8 text-center">
+                <div>
+                  <p className="text-[#FAFAFA]/80 text-lg font-bold mb-2">
+                    No hay productos para esta marca.
+                  </p>
+                  <p className="text-[#FAFAFA]/50 text-sm">
+                    Probá con otra marca del panel de la derecha.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="relative flex items-center">
                   <button
-                    key={pageIndex}
-                    onClick={() => scrollToPage(pageIndex)}
-                    className="flex items-center justify-center p-0 border-none bg-transparent cursor-pointer"
-                    aria-label={`Ir a página ${pageIndex + 1}`}
+                    onClick={scrollPrev}
+                    className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-[#00E5D1] rounded-full shadow-md shadow-[#00E5D1]/40 transition-all duration-300 hover:scale-110 hover:bg-white mr-3 z-10"
+                    aria-label="Anterior"
                   >
-                    <div
-                      className={`h-0.5 transition-all duration-300 ${isActive ? 'w-8 bg-white' : 'w-4 bg-white/50'}`}
-                    />
+                    <ChevronLeft className="h-5 w-5 text-black" />
                   </button>
-                );
-              })}
-            </div>
 
-            {/* Indicador de swipe solo en mobile */}
-            <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
-              ← Desliza para ver más →
-            </div>
+                  <div
+                    ref={scrollContainerRef}
+                    className="scroll-container flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar flex-1"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                  >
+                    {[...filteredProducts, ...filteredProducts].map((product, index) => (
+                      <div
+                        key={`${product.slug}-${index}`}
+                        className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
+                      >
+                        <a
+                          href={`/product/${product.slug}`}
+                          className="group block"
+                        >
+                          <div className="relative aspect-[3/4] w-full overflow-hidden bg-white rounded-sm">
+                            <Image
+                              src={product.imageSrc}
+                              alt={`${product.name} - ${product.category}`}
+                              fill
+                              className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            />
+                          </div>
+                          <div className="mt-3 text-white">
+                            <h3 className="font-moderat text-sm sm:text-base font-normal">
+                              {product.name}
+                            </h3>
+                            <p className="font-moderat text-sm sm:text-base mt-1">
+                              {product.price}
+                            </p>
+                          </div>
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={scrollNext}
+                    className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-[#00E5D1] rounded-full shadow-md shadow-[#00E5D1]/40 transition-all duration-300 hover:scale-110 hover:bg-white ml-3 z-10"
+                    aria-label="Siguiente"
+                  >
+                    <ChevronRight className="h-5 w-5 text-black" />
+                  </button>
+                </div>
+
+                <div className="flex justify-center items-center gap-1 mt-6">
+                  {Array.from({ length: totalPages }).map((_, pageIndex) => {
+                    const isActive = activePage === pageIndex;
+                    return (
+                      <button
+                        key={pageIndex}
+                        onClick={() => scrollToPage(pageIndex)}
+                        className="flex items-center justify-center p-0 border-none bg-transparent cursor-pointer"
+                        aria-label={`Ir a página ${pageIndex + 1}`}
+                      >
+                        <div
+                          className={`h-0.5 transition-all duration-300 ${isActive ? 'w-8 bg-white' : 'w-4 bg-white/50'}`}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
+                  ← Deslaza para ver más →
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Categorías - Derecha */}
@@ -333,22 +340,36 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
             </p>
             <div className="flex flex-col gap-2 w-full">
               {categories.length > 0 ? (
-                categories.slice(0, 6).map((cat) => {
-                  const isActive = selectedCategory === cat.slug;
-                  return (
-                    <button
-                      key={cat.slug}
-                      type="button"
-                      onClick={() => setSelectedCategory(cat.slug)}
-                      className={`group flex items-center justify-between w-full px-4 py-3 rounded-sm border transition-all duration-300 ${isActive ? 'bg-[#00E5D1] border-[#00E5D1] text-black' : 'bg-[#101828] border-[#00E5D1]/30 text-[#FAFAFA] hover:border-[#00E5D1] hover:bg-[#00E5D1]/10'}`}
-                    >
-                      <span className="font-moderat text-sm font-bold uppercase tracking-[0.1em] transition-colors">
-                        {cat.name}
-                      </span>
-                      <span className="text-[#00E5D1] text-xl transition-transform group-hover:translate-x-1">→</span>
-                    </button>
-                  );
-                })
+                <>
+                  {/* Botón "Todas" para limpiar el filtro */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategory(null)}
+                    className={`group flex items-center justify-between w-full px-4 py-3 rounded-sm border transition-all duration-300 ${selectedCategory === null ? 'bg-[#D32F2F] border-[#D32F2F] text-white' : 'bg-[#101828] border-[#FAFAFA]/30 text-[#FAFAFA] hover:border-[#D32F2F] hover:bg-[#D32F2F]/10'}`}
+                  >
+                    <span className="font-moderat text-sm font-bold uppercase tracking-[0.1em]">
+                      Todas
+                    </span>
+                    <span className="text-xl">★</span>
+                  </button>
+
+                  {categories.slice(0, 6).map((cat) => {
+                    const isActive = selectedCategory === cat.slug;
+                    return (
+                      <button
+                        key={cat.slug}
+                        type="button"
+                        onClick={() => setSelectedCategory(cat.slug)}
+                        className={`group flex items-center justify-between w-full px-4 py-3 rounded-sm border transition-all duration-300 ${isActive ? 'bg-[#00E5D1] border-[#00E5D1] text-black' : 'bg-[#101828] border-[#00E5D1]/30 text-[#FAFAFA] hover:border-[#00E5D1] hover:bg-[#00E5D1]/10'}`}
+                      >
+                        <span className="font-moderat text-sm font-bold uppercase tracking-[0.1em] transition-colors">
+                          {cat.name}
+                        </span>
+                        <span className="text-[#00E5D1] text-xl transition-transform group-hover:translate-x-1">→</span>
+                      </button>
+                    );
+                  })}
+                </>
               ) : (
                 <Link
                   href="/tienda/categoria"

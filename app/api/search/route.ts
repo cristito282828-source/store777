@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSearchResults } from '@/lib/woocommerce';
 
-// Función para limpiar y formatear precios CLP
-const formatCLP = (amount: string | number): string => {
+// Función para limpiar y formatear precios COP
+const formatCOP = (amount: string | number): string => {
   let num = typeof amount === 'string' ? amount : String(amount);
 
   // Limpiar el string: remover puntos (separadores de miles) y comas (decimales)
   num = num.replace(/\./g, '').replace(/,/g, '');
 
   const parsed = parseFloat(num) || 0;
-  return new Intl.NumberFormat('es-CL', {
+  return new Intl.NumberFormat('es-CO', {
     style: 'currency',
-    currency: 'CLP',
+    currency: 'COP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
   }).format(parsed);
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
         handle: product.handle,
         title: product.title,
         price: priceAmount,
-        priceDisplay: formatCLP(priceAmount),
+        priceDisplay: formatCOP(priceAmount),
         image: product.featuredImage?.url || '/placeholder.jpg',
         altText: product.featuredImage?.altText || product.title
       };

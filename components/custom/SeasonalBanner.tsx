@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -10,16 +11,19 @@ const slides = [
     id: '1',
     src: '/banner-forza-cali (1).png',
     alt: 'Banner Forza Cali',
+    href: '/tienda/categoria',
   },
   {
     id: '2',
     src: '/banner-forza.png',
     alt: 'Banner Forza',
+    href: '/tienda/categoria',
   },
   {
     id: '3',
     src: '/banner-forza3.png',
     alt: 'Banner Forza 3',
+    href: '/tienda/categoria',
   },
 ];
 
@@ -42,16 +46,21 @@ export default function SeasonalBanner() {
     <section id="seasonal" className="relative text-white">
       <Slider {...settings}>
         {slides.map((slide) => (
-          <div key={slide.id} className="relative h-[70vh] min-h-[520px] overflow-hidden">
+          <Link
+            key={slide.id}
+            href={slide.href}
+            className="block relative h-[70vh] min-h-[520px] overflow-hidden cursor-pointer"
+            aria-label={slide.alt}
+          >
             <Image
               src={slide.src}
               alt={slide.alt}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 hover:scale-105"
               sizes="100vw"
               priority={slide.id === '1'}
             />
-          </div>
+          </Link>
         ))}
       </Slider>
 

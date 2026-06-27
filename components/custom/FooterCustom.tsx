@@ -34,61 +34,93 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[#0A0A0A] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand & Description */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-4 mb-4">
-              <div className="text-3xl font-bold tracking-wider">
-                <span className="text-white">Lorem Ipsum Store</span>
+              <div className="relative w-16 h-16 flex-none">
+                <Image
+                  src="/logo-777.jpeg"
+                  alt="Store 777"
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <div className="text-2xl font-black tracking-wider uppercase">
+                <span className="text-[#00E5D1]">STORE</span>
+                <span className="text-white"> 777</span>
               </div>
             </div>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="text-[#FAFAFA]/70 mb-6 leading-relaxed">
+              Calzado y streetwear con actitud. Estilo único para skaters y coleccionistas.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a
+                href="https://www.instagram.com/store777"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FAFAFA]/60 hover:text-[#D32F2F] transition-colors duration-200"
+                aria-label="Instagram"
+              >
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
-                <Linkedin className="h-5 w-5" />
+              <a
+                href="https://www.facebook.com/store777"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
               </a>
             </div>
           </div>
 
           {/* Menú Inferior */}
           <div>
-            <h4 className="text-lg mb-6">Menú inferior</h4>
+            <h4 className="text-lg mb-6 font-bold uppercase tracking-wider text-[#FAFAFA]">Menú inferior</h4>
             <ul className="space-y-3">
-              <li><Link href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Búsqueda</Link></li>
-              <li><Link href="/terminos-del-servicio" className="text-gray-400 hover:text-white transition-colors duration-200">Términos del servicio</Link></li>
-              <li><Link href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Catálogo</Link></li>
+              <li><Link href="/search" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Búsqueda</Link></li>
+              <li><Link href="/terminos-del-servicio" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Términos del servicio</Link></li>
+              <li><Link href="/search" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Catálogo</Link></li>
             </ul>
           </div>
 
           {/* Nuestras Políticas */}
           <div>
-            <h4 className="text-lg mb-6">Nuestras Políticas</h4>
+            <h4 className="text-lg mb-6 font-bold uppercase tracking-wider text-[#FAFAFA]">Nuestras Políticas</h4>
             <ul className="space-y-3">
-              <li><Link href="/politica-proteccion-datos" className="text-gray-400 hover:text-white transition-colors duration-200">Política de protección de datos</Link></li>
-              <li><Link href="/politica-reembolso" className="text-gray-400 hover:text-white transition-colors duration-200">Política de Reembolso</Link></li>
-              <li><Link href="/politica-envios" className="text-gray-400 hover:text-white transition-colors duration-200">Política de Envíos</Link></li>
-              <li><Link href="/terminos-y-condiciones" className="text-gray-400 hover:text-white transition-colors duration-200">Términos y Condiciones</Link></li>
+              <li><Link href="/politica-proteccion-datos" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Política de protección de datos</Link></li>
+              <li><Link href="/politica-reembolso" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Política de Reembolso</Link></li>
+              <li><Link href="/politica-envios" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Política de Envíos</Link></li>
+              <li><Link href="/terminos-y-condiciones" className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200">Términos y Condiciones</Link></li>
             </ul>
           </div>
 
-          {/* Newsletter & Contact */}
+          {/* Contact */}
           <div>
-            <h4 className="text-lg mb-6">Conoce sobre Noticias y descuentos</h4>
-            <p className="text-gray-400 mb-4">
-              Suscríbete y obtén noticias y regalos en todos nuestros productos.
+            <h4 className="text-lg mb-6 font-bold uppercase tracking-wider text-[#FAFAFA]">Contacto</h4>
+            <p className="text-[#FAFAFA]/60 mb-6">
+              ¿Consultas? Escribinos por WhatsApp y te respondemos a la brevedad.
             </p>
+
+            {/* WhatsApp CTA */}
+            <a
+              href="https://wa.me/573232182386?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 bg-[#25D366] hover:bg-[#1ebe5b] transition-colors mb-6"
+            >
+              <Phone className="h-5 w-5 text-white" />
+              <span className="font-bold text-white">+57 323 218 2386</span>
+            </a>
+
             <form onSubmit={handleNewsletterSubmit} className="mb-6">
+              <p className="text-[#FAFAFA]/60 text-sm mb-2">Suscribite al newsletter:</p>
               <div className="flex gap-2">
                 <input
                   type="email"
@@ -96,46 +128,40 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}
-                  className="flex-1 px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50"
+                  className="flex-1 px-4 py-2 bg-[#101828] text-white focus:outline-none focus:ring-2 focus:ring-[#00E5D1] disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 bg-white text-gray-900 rounded hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-[#00E5D1] text-black font-bold hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? '...' : 'Suscribir'}
                 </button>
               </div>
             </form>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-gray-400 flex-shrink-0" />
-                <a href="tel:+18000000000" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  +1 800 000 0000
-                </a>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-gray-400 flex-shrink-0" />
-                <a href="mailto:support@example.com" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  support@example.com
-                </a>
-              </div>
+
+            <div className="flex items-center space-x-3">
+              <Mail className="h-5 w-5 text-[#FAFAFA]/60 flex-shrink-0" />
+              <a
+                href="mailto:hello@example.com"
+                className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200"
+              >
+                hello@example.com
+              </a>
             </div>
           </div>
         </div>
 
-        <hr className="border-gray-700 mb-8" />
+        <hr className="border-[#FAFAFA]/10 mb-8" />
 
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Tienda de Ejemplo. Todos los derechos reservados.
+            <p className="text-[#FAFAFA]/40 text-sm">
+              © {new Date().getFullYear()} STORE 777. Todos los derechos reservados.
             </p>
             <div className="flex space-x-6">
-              <span className="text-gray-400 text-sm">
-                País/región: Chile (CLP $)
-              </span>
+              <span className="text-[#FAFAFA]/40 text-sm">Argentina 🇦🇷</span>
             </div>
           </div>
         </div>

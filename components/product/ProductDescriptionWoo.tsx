@@ -159,8 +159,8 @@ export function ProductDescriptionWoo({ product }: ProductDescriptionWooProps) {
       title: product.name,
       handle: product.slug,
       priceRange: {
-        minVariantPrice: { amount: priceStr || '0', currencyCode: 'CLP' },
-        maxVariantPrice: { amount: priceStr || '0', currencyCode: 'CLP' }
+        minVariantPrice: { amount: priceStr || '0', currencyCode: 'COP' },
+        maxVariantPrice: { amount: priceStr || '0', currencyCode: 'COP' }
       },
       featuredImage: product.image ? {
         url: product.image.sourceUrl,
@@ -203,7 +203,7 @@ export function ProductDescriptionWoo({ product }: ProductDescriptionWooProps) {
   };
 
   // Envío gratis - leer desde el AnnouncementBar
-  const freeShippingThreshold = 80000; // $80.000 CLP
+  const freeShippingThreshold = 80000; // $80.000 COP
 
   return (
     <div className="space-y-6">
@@ -363,7 +363,7 @@ export function ProductDescriptionWoo({ product }: ProductDescriptionWooProps) {
           onClick={() => handleAccordionClick(1)}
           content={
             <ul className="space-y-2">
-              <li>• Envío gratis en compras superiores a ${freeShippingThreshold.toLocaleString('es-CL')} CLP</li>
+              <li>• Envío gratis en compras superiores a ${freeShippingThreshold.toLocaleString('es-CO')} COP</li>
               <li>• Entrega en 3-5 días hábiles en ciudades principales</li>
               <li>• Entrega en 5-7 días hábiles en el resto del país</li>
               <li>• Seguimiento en tiempo real de tu pedido</li>
