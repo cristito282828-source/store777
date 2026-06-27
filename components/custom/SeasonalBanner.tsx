@@ -11,19 +11,19 @@ const slides = [
     id: '1',
     src: '/banner-forza-cali (1).png',
     alt: 'Banner Forza Cali',
-    href: '/tienda/categoria',
+    href: '/search',
   },
   {
     id: '2',
     src: '/banner-forza.png',
     alt: 'Banner Forza',
-    href: '/tienda/categoria',
+    href: '/search',
   },
   {
     id: '3',
     src: '/banner-forza3.png',
     alt: 'Banner Forza 3',
-    href: '/tienda/categoria',
+    href: '/search',
   },
 ];
 
