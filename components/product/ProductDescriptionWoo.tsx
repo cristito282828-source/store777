@@ -5,25 +5,10 @@ import Link from 'next/link';
 import { ProductVariations } from './ProductVariations';
 import { Minus, Plus, Truck, RefreshCcw, Shield, Package } from 'lucide-react';
 import { useCart } from '@/components/providers/CartProvider';
+import { formatPrice } from '@/lib/utils';
 import type { WooProductAttribute, WooProductVariation } from '@/lib/woocommerce/types';
 
 type ProductAttribute = WooProductAttribute;
-
-// Función para limpiar precio HTML (remover &nbsp;, símbolo $, etc)
-function formatPrice(price: string | undefined): string {
-  if (!price) return 'Precio no disponible';
-
-  // Remover HTML entities y símbolos
-  const clean = price
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'");
-
-  return clean.trim();
-}
 
 type ProductVariation = WooProductVariation & {
   databaseId?: number;

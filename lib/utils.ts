@@ -1,5 +1,24 @@
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
+/**
+ * Decodifica HTML entities (&nbsp;, &amp;, etc.) que llegan como string
+ * desde el backend de WooCommerce. React renderiza el texto literal de
+ * estas entidades si no se decodifican manualmente.
+ *
+ * Ej: "$&nbsp;200.000" → "$ 200.000"
+ */
+export function formatPrice(price: string | undefined | null): string {
+  if (!price) return 'Precio no disponible';
+  return price
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .trim();
+}
+
 export const createUrl = (
   pathname: string,
   params: URLSearchParams | ReadonlyURLSearchParams

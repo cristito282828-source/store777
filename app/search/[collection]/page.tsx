@@ -9,6 +9,7 @@ import {
   getProducts as getWooProducts,
   getCollections as getWooCollections
 } from '@/lib/woocommerce';
+import { formatPrice } from '@/lib/utils';
 
 import { Metadata } from 'next';
 
@@ -160,7 +161,7 @@ export default async function CategoryPage(props: {
                     {product.name}
                   </h3>
                   <p className="text-lg text-gray-700 font-medium">
-                    {product.price}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </Link>

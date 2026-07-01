@@ -14,21 +14,17 @@ const Price = ({
   const formatPrice = (value: string) => {
     const numValue = parseFloat(value);
     if (isNaN(numValue)) {
-      return new Intl.NumberFormat(undefined, {
-        style: 'currency',
-        currency: currencyCode,
-        currencyDisplay: 'narrowSymbol',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }).format(0);
-    }
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: currencyCode,
-      currencyDisplay: 'narrowSymbol',
+      const formattedNumber = new Intl.NumberFormat('es-CO', {
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
+    }).format(0);
+    return `$${formattedNumber}`;
+    }
+    const formattedNumber = new Intl.NumberFormat('es-CO', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     }).format(numValue);
+    return `$${formattedNumber}`;
   };
 
   const hasDiscount = compareAtAmount && !isNaN(parseFloat(compareAtAmount)) && !isNaN(parseFloat(amount)) && parseFloat(compareAtAmount) > parseFloat(amount);

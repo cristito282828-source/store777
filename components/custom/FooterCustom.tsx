@@ -143,10 +143,10 @@ export default function Footer() {
             <div className="flex items-center space-x-3">
               <Mail className="h-5 w-5 text-[#FAFAFA]/60 flex-shrink-0" />
               <a
-                href="mailto:hello@example.com"
+                href="mailto:shoescompany0101@gmail.com"
                 className="text-[#FAFAFA]/60 hover:text-[#00E5D1] transition-colors duration-200"
               >
-                hello@example.com
+                shoescompany0101@gmail.com
               </a>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function Footer() {
               © {new Date().getFullYear()} STORE 777. Todos los derechos reservados.
             </p>
             <div className="flex space-x-6">
-              <span className="text-[#FAFAFA]/40 text-sm">Argentina 🇦🇷</span>
+              <span className="text-[#FAFAFA]/40 text-sm">Colombia 🇨🇴</span>
             </div>
           </div>
         </div>

@@ -63,8 +63,7 @@ export async function woocommerceFetch<T>({
     const isServer = typeof window === 'undefined';
     const endpoint = isServer ? directEndpoint : GRAPHQL_ENDPOINT;
 
-    console.log(`🔵 Fetching WooCommerce (${isServer ? 'Server' : 'Client'}): ${isServer ? directEndpoint : GRAPHQL_ENDPOINT}`);
-    if (variables) console.log('🔵 Variables:', variables);
+    // (logs de debug removidos: 🔵 Fetching, 🔵 Variables, ✅ fetch successful)
 
     const fetchOptions: RequestInit = {
       method: 'POST',
@@ -102,8 +101,6 @@ export async function woocommerceFetch<T>({
       throw new Error(errorMessage);
     }
 
-    console.log('✅ WooCommerce fetch successful');
-
     return {
       status: result.status,
       body
@@ -129,18 +126,14 @@ export async function woocommerceFetch<T>({
  * WooCommerce devuelve precios como HTML: <span class="...">$50.00</span>
  */
 function parsePrice(priceHtml: string | undefined): { amount: string; currencyCode: string } {
-  console.log('🔍 parsePrice recibió:', { priceHtml, tipo: typeof priceHtml });
-
   if (!priceHtml) {
     return { amount: '0', currencyCode: 'USD' };
   }
 
   // Limpiar HTML
   const priceHtmlStr = String(priceHtml);
-  console.log('🔍 priceHtml convertido a string:', priceHtmlStr);
 
   const cleanPrice = priceHtmlStr.replace(/<[^>]*>/g, '').trim();
-  console.log('🔍 cleanPrice:', cleanPrice);
 
   // Extraer valor numérico (admite formatos: $50,000.00, 50.000, $50.000)
   const priceMatch = cleanPrice.match(/[\$€£¥]?\s*([\d,.]+)/);

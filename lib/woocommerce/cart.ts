@@ -272,7 +272,12 @@ export function getCartItemCount(cart: Cart | null): number {
 }
 
 /**
- * Formatear precio para mostrar
+ * Formatear precio para mostrar en el carrito.
+ *
+ * NOTA: usa un fallback distinto ($0 en vez de 'Precio no disponible') y no
+ * decodifica HTML entities porque los totales ya vienen limpios del
+ * carrito (distinto al precio crudo de los productos). NO reemplazar por
+ * `formatPrice` de `@/lib/utils` sin revisar.
  */
 export function formatPrice(price: string | undefined): string {
   if (!price) return '$0';

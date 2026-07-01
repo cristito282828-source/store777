@@ -5,6 +5,8 @@ import { CartProvider } from '@/components/providers/CartProvider';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { generateOrganizationSchema, generateWebSiteSchema } from '@/lib/structured-data';
 import { JsonLdScript } from '@/lib/json-ld-script';
+import N8nChatWidget from '@/components/N8nChatWidget';
+
 
 export const metadata: Metadata = {
   title: {
@@ -54,6 +56,7 @@ export default function RootLayout({
           </RecentlyViewedProvider>
           <CartDrawer />
         </CartProvider>
+        <N8nChatWidget />
       </body>
     </html>
   );

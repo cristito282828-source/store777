@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ProductVariations } from './ProductVariations';
 import type { WooProductAttribute, WooProductVariation } from '@/lib/woocommerce/types';
+import { formatPrice } from '@/lib/utils';
 
 type ProductAttribute = WooProductAttribute;
 
@@ -29,7 +30,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   const variations = isVariable ? product.variations?.nodes || [] : [];
 
   // Obtener precio actual
-  const currentPrice = selectedVariation?.price || product.price || 'Precio no disponible';
+  const currentPrice = formatPrice(selectedVariation?.price || product.price);
   const currentStockStatus = selectedVariation?.stockStatus || product.stockStatus;
 
   // Manejar cambio de variación
@@ -80,7 +81,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       {isVariable && variations.length > 0 && (
         <ProductVariations
           variations={variations}
-          defaultPrice={product.price}
+          defaultPrice={formatPrice(product.price)}
           onVariationChange={handleVariationChange}
         />
       )}
@@ -94,7 +95,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-gray-600">Precio:</span>
-            <span className="font-medium text-green-700">{selectedVariation.price}</span>
+            <span className="font-medium text-green-700">{formatPrice(selectedVariation.price)}</span>
           </div>
         </div>
       )}

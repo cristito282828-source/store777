@@ -3,6 +3,7 @@ import { getProducts } from 'lib/woocommerce';
 import { ProductGridSkeleton } from '@/components/ui/skeleton';
 import { WooNavbar } from '@/components/layout/navbar/woo-navbar';
 import FooterCustom from '@/components/custom/FooterCustom';
+import { formatPrice } from '@/lib/utils';
 
 export const metadata = {
   title: 'Tienda',
@@ -47,7 +48,7 @@ async function AllProductsGrid({
             </h3>
             {product.price && (
               <p className="text-sm font-semibold text-gray-900">
-                {product.price}
+                {formatPrice(product.price)}
               </p>
             )}
           </div>

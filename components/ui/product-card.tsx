@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { formatPrice } from '@/lib/utils';
 
 interface Product {
   id: string;
@@ -10,25 +11,6 @@ interface Product {
   image: string;
   category: string;
   description: string;
-}
-
-// Función para limpiar precio HTML (remover &nbsp;, símbolo $, etc)
-function formatPrice(price: string | undefined): string {
-  if (!price) return 'Precio no disponible';
-
-  // Remover HTML entities y símbolos
-  const clean = price
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'");
-
-  // Remover el símbolo $ si quieres formato limpio
-  // clean = clean.replace(/\$/g, '$ ');
-
-  return clean.trim();
 }
 
 export function ProductCard({ product }: { product: Product }) {

@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 
 interface FeaturedProduct {
   id: string;
@@ -25,21 +26,6 @@ interface FeaturedProductsProps {
   products: FeaturedProduct[];
   categories?: FeaturedCategory[];
   title?: string;
-}
-
-// Función para limpiar precio HTML
-function formatPrice(price: string | undefined): string {
-  if (!price) return 'Precio no disponible';
-
-  const clean = price
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'");
-
-  return clean.trim();
 }
 
 export default function FeaturedProducts({ products, categories = [] }: FeaturedProductsProps) {
@@ -288,7 +274,7 @@ export default function FeaturedProducts({ products, categories = [] }: Featured
                               {product.name}
                             </h3>
                             <p className="font-moderat text-sm sm:text-base mt-1">
-                              {product.price}
+                              {formatPrice(product.price)}
                             </p>
                           </div>
                         </a>

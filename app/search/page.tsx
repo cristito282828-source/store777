@@ -6,19 +6,7 @@ import Link from 'next/link';
  */
 
 import { Metadata } from 'next';
-
-// Función para formatear precio (remover HTML entities)
-function formatPrice(price: string | undefined | null): string {
-  if (!price) return 'Precio no disponible';
-  return price
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'")
-    .trim();
-}
+import { formatPrice } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Todos los Productos',
