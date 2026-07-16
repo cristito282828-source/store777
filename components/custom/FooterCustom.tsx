@@ -43,7 +43,7 @@ export default function Footer() {
             <div className="flex items-center gap-4 mb-4">
               <div className="relative w-16 h-16 flex-none">
                 <Image
-                  src="/logo-777.jpeg"
+                  src="/logo-777-v2.jpg"
                   alt="Store 777"
                   width={64}
                   height={64}

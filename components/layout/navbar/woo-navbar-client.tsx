@@ -216,7 +216,7 @@ function WooMobileMenu({
         <div className="flex items-center justify-between border-b p-4">
           <div className="flex items-center gap-2">
             <Image
-              src="/logo-777.jpeg"
+              src="/logo-777-v2.jpg"
               alt="Store 777"
               width={32}
               height={32}
@@ -310,7 +310,7 @@ export function WooNavbarClient({ categories, SITE_NAME }: WooNavbarClientProps)
             >
               <div className="flex h-12 w-12 md:h-16 md:w-16 flex-none items-center justify-center">
                 <Image
-                  src="/logo-777.jpeg"
+                  src="/logo-777-v2.jpg"
                   alt="Store 777"
                   width={64}
                   height={64}
