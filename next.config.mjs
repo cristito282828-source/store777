@@ -28,11 +28,22 @@ const nextConfig = {
         pathname: '/**'
       },
       {
+      {
         protocol: 'https',
-        hostname: '**.pantheonsite.io',
+        // Allow Pantheon sandboxes / sites; include explicit host used in production
+        hostname: '*.pantheonsite.io',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'dev-shoes-company-777.pantheonsite.io',
         pathname: '/**'
       }
     ]
+    ,
+    // Parche temporal: deshabilitar el optimizador de imágenes de Next.js
+    // para evitar errores 502 mientras se corrige el origen en Pantheon.
+    unoptimized: true,
   },
 
   // Experimental features for performance
