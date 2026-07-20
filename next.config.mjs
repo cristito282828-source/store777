@@ -28,7 +28,6 @@ const nextConfig = {
         pathname: '/**'
       },
       {
-      {
         protocol: 'https',
         // Allow Pantheon sandboxes / sites; include explicit host used in production
         hostname: '*.pantheonsite.io',
